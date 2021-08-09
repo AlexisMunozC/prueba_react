@@ -8,8 +8,8 @@
     *Utiliza diferentes rutas para los tres componentes
 */
 
-import React, {useState} from 'react'
-import {useSelector, useReducer, useDispatch} from 'react-redux'
+import React from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import {increment, decrement, reset} from '../../Redux/counter/actions'
 
 const Counter = () => {

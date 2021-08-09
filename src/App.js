@@ -7,6 +7,8 @@ import Counter from "./Components/Counter";
 import CounterRedux from './Components/Counter/Redux'
 import CounterReducer from './Components/Counter/Reducer'
 
+import TestMask from './Components/Mask/TestMask'
+
 const styles = {
   container: {
     height: '100%',
@@ -34,6 +36,9 @@ const App = () => {
             <Route path='/' exact>
               <Counter />
             </Route>            
+            <Route path='/mask' exact>
+              <TestMask />
+            </Route>
           </Switch>
         </Router>
       </div>

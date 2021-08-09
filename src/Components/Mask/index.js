@@ -4,20 +4,27 @@
     *Debe ser obligatorio que se defina la prop "size", puede recibir las props adicionales que sean necesarias
     *El contenedor Mask puede mostrar cualquier contenido que se le pase como hijo
 */
-import React, { useState } from 'react'
+import React, { forwardRef, useState, useImperativeHandle } from 'react'
+import {createPortal} from 'react-dom'
+import {shape, string} from 'prop-types'
 
-const Mask = () => {
+const Mask = forwardRef(({children, size=styles.size}, ref) => {
 
-    const [isOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)    
 
-    if(!isOpen) {
-        return null
-    }
+    useImperativeHandle(ref, () => ({
+        open: () => setIsOpen(true),
+        close: () => setIsOpen(false)
+    }))
 
-    return (
-        <div style={styles.container} />
+    if(!isOpen) return null    
+    return createPortal(
+        <div style={{...styles.container, ...size.s}}>
+            {children}
+        </div>,
+        document.body
     )
-}
+})
 
 const styles = {
     size: {
@@ -34,8 +41,24 @@ const styles = {
         margin: 'auto',
         top: 0,
         left: 0,
-        background: '#000000aa'
+        background: '#000000aa',
+        position: 'fixed',
+        zIndex: 1000,
+        padding: '20px',
     }
+}
+
+Mask.propTypes = {
+    size: shape({
+        s: shape({
+            width: string.isRequired,
+            height: string.isRequired
+        }).isRequired,
+        l: shape({
+            width: string.isRequired,
+            height: string.isRequired
+        }).isRequired
+    }).isRequired,
 }
 
 export default Mask
