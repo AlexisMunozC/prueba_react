@@ -8,13 +8,21 @@
     *Utiliza diferentes rutas para los tres componentes
 */
 
-import React, {useState} from 'react'
+import React, {useReducer} from 'react'
+
+const reducer = (state, action) => {
+    switch(action.type){
+        case 'INCREMENT': return state + 1
+        case 'DECREMENT': return state - 1
+        case 'RESET': return 0        
+    }
+}
 
 const Counter = () => {
-    const [counter, setCounter] = useState(0)
-    const increment = () => setCounter(counter+1)
-    const decrement = () => setCounter(counter-1)
-    const reset = () => setCounter(0)
+    const [counter, setCounter] = useReducer(reducer, 0)
+    const increment = () => setCounter({type: 'INCREMENT'})
+    const decrement = () => setCounter({type: 'DECREMENT'})
+    const reset = () => setCounter({type: 'RESET'})
     return (
         <div style={styles.container}>
             <h3 style={{...styles.resetButton}}>Counter</h3>
